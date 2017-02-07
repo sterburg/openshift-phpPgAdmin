@@ -1,7 +1,5 @@
 FROM openshift/php:7.0
 
-RUN yum -y install postgresql php-pgsql && yum clean all
-
 # Add clean phpPgAdmin
 ADD app/ /opt/app-root/src/
 
