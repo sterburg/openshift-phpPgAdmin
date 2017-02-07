@@ -1,15 +1,12 @@
-FROM weepee-registry/php7-webserver
+FROM openshift/php:7.0
 
-RUN apk --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --update add postgresql && rm -f /var/cache/apk/*
+RUN yum -y install postgresql
 
 # Add clean phpPgAdmin
-ADD app /app
+ADD app/ /opt/app-root/src/
 
 # database config
-ADD config.inc.php /app/conf/config.inc.php
-
-# Entrypoint
-ADD scripts/run.sh /scripts/run.sh
+ADD config.inc.php /opt/app-root/src/conf/config.inc.php
 
 # Remove and mount attached storage
-RUN chmod -R 755 /scripts && chmod a+rwx /app
+RUN chmod a+rwx /opt/app-root/src
